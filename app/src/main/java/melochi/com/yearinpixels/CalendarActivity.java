@@ -1,15 +1,12 @@
 package melochi.com.yearinpixels;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.CalendarView;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import android.widget.FrameLayout;
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends FragmentActivity {
     private static final String TAG = "CalendarActivity";
-
-    private CalendarView mCalendarView;
+    private FrameLayout mContainer;
 
     String MONTHS[] = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
@@ -19,15 +16,19 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+        mContainer = findViewById(R.id.fragment_container);
 
-        mCalendarView = (CalendarView) findViewById(R.id.calendar_view);
-        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
-                Log.d(TAG, month + "/" + day + "/" + year);
-                String selectedDate = MONTHS[month-1] + " " + day + ", " + year;
-                Toast.makeText(CalendarActivity.this, selectedDate, Toast.LENGTH_LONG).show();
+        if (mContainer != null) {
+            // do not do anything if restoring from previous state
+            // (do not override existing fragment)
+            if (savedInstanceState != null) {
+                return;
             }
-        });
+
+            CalendarFragment calendarFragment = new CalendarFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, calendarFragment).commit();
+        }
     }
 }

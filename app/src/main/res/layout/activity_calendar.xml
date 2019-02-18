@@ -7,11 +7,17 @@
     android:orientation="vertical"
     tools:context=".CalendarActivity">
 
-    <CalendarView
-        android:id="@+id/calendar_view"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </CalendarView>
+    </FrameLayout>
+    <!--<CalendarView-->
+        <!--android:id="@+id/calendar_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</CalendarView>-->
 
 </LinearLayout>
