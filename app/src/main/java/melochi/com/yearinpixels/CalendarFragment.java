@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ public class CalendarFragment extends Fragment {
     private GridView mGrid;
 
     private Calendar currentDate;
-    private static final int NUM_CELLS = 42;
+    private static final int MAX_NUM_CELLS = 42;
 
     String MONTH_NAMES[] = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
@@ -72,27 +71,33 @@ public class CalendarFragment extends Fragment {
     public void populateCalendar() {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calender = (Calendar) currentDate.clone();
+        int currentMonth = currentDate.getTime().getMonth();
+
         // start at the first day of this month
         calender.set(Calendar.DAY_OF_MONTH, 1);
         // determine the cell for first day of the current month based on what day of the week it is
         // note: get(DAY_OF_WEEK) returns 1-7 for Sunday-Saturday
         int startCell = calender.get(Calendar.DAY_OF_WEEK) - 1;
-        Log.d(TAG, "day of the week of the first day: " + calender.get(Calendar.DAY_OF_WEEK));
 
         // start from x number of days BEFORE the start of the current month
         // purpose: fill empty cells with previous month's dates
         calender.add(Calendar.DAY_OF_MONTH, -startCell);
 
-        while (cells.size() < NUM_CELLS) {
-            // getTime() returns a Date object
-            cells.add(calender.getTime());
+        Date next = calender.getTime();
+        while (cells.size() < MAX_NUM_CELLS && !isMonthFilled(next, currentMonth, cells.size())) {
+            cells.add(next);
             // increment by one day
             calender.add(Calendar.DAY_OF_MONTH, 1);
+            next = calender.getTime();
         }
         // fill grid
         mGrid.setAdapter(new CalendarAdapter(getContext(), cells));
         // set title
         mDateTextView.setText(MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
+    }
+
+    private boolean isMonthFilled(Date date, int month, int numFilled) {
+        return date.getMonth() != month && numFilled != 0 && numFilled % 7 == 0;
     }
 
     private class CalendarAdapter extends ArrayAdapter<Date> {
