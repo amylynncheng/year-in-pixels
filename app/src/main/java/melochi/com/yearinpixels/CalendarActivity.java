@@ -1,12 +1,12 @@
 package melochi.com.yearinpixels;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.widget.FrameLayout;
+import android.support.v4.app.FragmentManager;
 
 public class CalendarActivity extends FragmentActivity {
     private static final String TAG = "CalendarActivity";
-    private FrameLayout mContainer;
 
     String MONTHS[] = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
@@ -16,19 +16,16 @@ public class CalendarActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        mContainer = findViewById(R.id.fragment_container);
 
-        if (mContainer != null) {
-            // do not do anything if restoring from previous state
-            // (do not override existing fragment)
-            if (savedInstanceState != null) {
-                return;
-            }
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment calendarFragment = manager.findFragmentById(R.id.fragment_container);
 
-            CalendarFragment calendarFragment = new CalendarFragment();
+        if (calendarFragment == null) {
+            calendarFragment = new CalendarFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, calendarFragment).commit();
+                    .add(R.id.fragment_container, calendarFragment)
+                    .commit();
         }
     }
 }
