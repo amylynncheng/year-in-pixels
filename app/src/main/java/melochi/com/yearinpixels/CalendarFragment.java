@@ -1,6 +1,7 @@
 package melochi.com.yearinpixels;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -76,10 +77,12 @@ public class CalendarFragment extends Fragment {
 
     private class CalendarAdapter extends ArrayAdapter<Date> {
         private LayoutInflater inflater;
+        private Date today;
 
         public CalendarAdapter(Context context, ArrayList<Date> days) {
             super(context, R.layout.calendar_day, days);
             inflater = LayoutInflater.from(context);
+            today = new Date();
         }
 
         @Override
@@ -91,8 +94,19 @@ public class CalendarFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.calendar_day, parent, false);
             }
 
-            ((TextView) convertView).setText(String.valueOf(date.getDate()));
-            Log.d(TAG, "getDate of element in cells list: " + date.getDate());
+            TextView dateTextView = (TextView) convertView;
+
+            if (date.getMonth() != today.getMonth()) {
+                // grey out the dates outside of the current month
+                dateTextView.setTextColor(getResources().getColor(R.color.greyOut));
+            }
+            if (date.getDate() == today.getDate()){
+                // set today's date to blue and bold the font
+                dateTextView.setTypeface(null, Typeface.BOLD);
+                dateTextView.setTextColor(getResources().getColor(R.color.lightBlue));
+            }
+
+            dateTextView.setText(String.valueOf(date.getDate()));
             return convertView;
         }
     }
