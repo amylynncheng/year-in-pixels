@@ -28,6 +28,10 @@ public class CalendarFragment extends Fragment {
     private Calendar currentDate;
     private static final int NUM_CELLS = 42;
 
+    String MONTH_NAMES[] = {"January", "February", "March", "April",
+            "May", "June", "July", "August", "September",
+            "October", "November", "December"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_component, container, false);
@@ -66,6 +70,8 @@ public class CalendarFragment extends Fragment {
         }
         // fill grid
         mGrid.setAdapter(new CalendarAdapter(getContext(), cells));
+        // set title
+        mDateTextView.setText(MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
     }
 
     private class CalendarAdapter extends ArrayAdapter<Date> {

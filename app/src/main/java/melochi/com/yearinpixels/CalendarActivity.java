@@ -8,10 +8,6 @@ import android.support.v4.app.FragmentManager;
 public class CalendarActivity extends FragmentActivity {
     private static final String TAG = "CalendarActivity";
 
-    String MONTHS[] = {"January", "February", "March", "April",
-            "May", "June", "July", "August", "September",
-            "October", "November", "December"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
