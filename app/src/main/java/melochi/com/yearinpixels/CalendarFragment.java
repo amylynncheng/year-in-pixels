@@ -42,11 +42,31 @@ public class CalendarFragment extends Fragment {
         mNextButton = view.findViewById(R.id.calendar_next_button);
         mDateTextView = view.findViewById(R.id.calendar_date_display);
         mGrid = view.findViewById(R.id.calendar_grid);
+        assignListeners();
+
         // get the current date
         currentDate = Calendar.getInstance();
 
         populateCalendar();
         return view;
+    }
+
+    private void assignListeners() {
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentDate.add(Calendar.MONTH, -1); // go back one month
+                populateCalendar();
+            }
+        });
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentDate.add(Calendar.MONTH, 1); // go forward one month
+                populateCalendar();
+            }
+        });
     }
 
     public void populateCalendar() {
@@ -85,6 +105,12 @@ public class CalendarFragment extends Fragment {
             today = new Date();
         }
 
+        /**
+         * GridView uses an Adapter to create the views and recycles views when they go offscreen
+         * and asks the Adapter to reuse the recycled views for new views that come on screen.
+         * GridView will call getView(...) on the Adapter each time it wants to display a child view
+         * on screen.
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Date date = getItem(position);
