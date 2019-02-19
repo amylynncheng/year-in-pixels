@@ -26,6 +26,9 @@ public class CalendarFragment extends Fragment {
     private GridView mGrid;
 
     private Calendar currentDate;
+    private int todaysDate;
+    private int todaysMonth;
+    private int todaysYear;
     private static final int MAX_NUM_CELLS = 42;
 
     String MONTH_NAMES[] = {"January", "February", "March", "April",
@@ -43,8 +46,12 @@ public class CalendarFragment extends Fragment {
         mGrid = view.findViewById(R.id.calendar_grid);
         assignListeners();
 
-        // get the current date
+        // get the current date (allowed to change, used for advancing to other months)
         currentDate = Calendar.getInstance();
+        // set the date, month, year of today's date (for comparisons)
+        todaysDate = currentDate.get(Calendar.DATE);
+        todaysMonth = currentDate.get(Calendar.MONTH);
+        todaysYear = currentDate.get(Calendar.YEAR);
 
         populateCalendar();
         return view;
@@ -54,18 +61,44 @@ public class CalendarFragment extends Fragment {
         mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // re-enable the next button if we previously disabled it
+                if (mNextButton.getVisibility() == View.INVISIBLE) {
+                    mNextButton.setVisibility(View.VISIBLE);
+                    mNextButton.setEnabled(true);
+                }
+
                 currentDate.add(Calendar.MONTH, -1); // go back one month
                 populateCalendar();
+                // only show calendar for the current year
+                if (isAtEdgeOfYear()) {
+                    view.setVisibility(View.INVISIBLE);
+                    view.setEnabled(false);
+                }
             }
         });
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // re-enable the previous button if we previously disabled it
+                if (mPrevButton.getVisibility() == View.INVISIBLE) {
+                    mPrevButton.setVisibility(View.VISIBLE);
+                    mPrevButton.setEnabled(true);
+                }
+
                 currentDate.add(Calendar.MONTH, 1); // go forward one month
                 populateCalendar();
+                // only show calendar for the current year
+                if (isAtEdgeOfYear()) {
+                    view.setVisibility(View.INVISIBLE);
+                    view.setEnabled(false);
+                }
             }
         });
+    }
+
+    private boolean isAtEdgeOfYear() {
+        return currentDate.get(Calendar.MONTH) == 0 || currentDate.get(Calendar.MONTH) == 11;
     }
 
     public void populateCalendar() {
