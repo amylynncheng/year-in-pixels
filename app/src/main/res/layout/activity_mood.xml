@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+        <TextView
+            android:id="@+id/date_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:text="@string/date_placeholder_text"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+        <TextView
+            android:id="@+id/mood_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_prompt"
+            android:textAlignment="center"/>
+        <com.hsalf.smilerating.SmileRating
+            android:id="@+id/mood_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mood_text"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:id="@+id/writing_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/writing_prompt"
+            android:textAlignment="center"
+            android:layout_below="@id/mood_rating"
+            android:layout_marginBottom="10dp"/>
+        <ImageButton
+            android:id="@+id/writing_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_black_24dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/writing_text"
+            android:contentDescription="@string/writing_button_description"/>
+    </RelativeLayout>
+
+</LinearLayout>
