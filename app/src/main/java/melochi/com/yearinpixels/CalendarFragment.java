@@ -172,14 +172,14 @@ public class CalendarFragment extends Fragment {
 
             TextView dateTextView = (TextView) convertView;
 
-            if (date.getMonth() != today.getMonth()) {
+            if (date.getMonth() != currentDate.getTime().getMonth()) {
                 // grey out the dates outside of the current month
                 dateTextView.setTextColor(getResources().getColor(R.color.greyOut));
             }
-            if (date.getDate() == today.getDate()){
+            if (date.getMonth() == today.getMonth() && date.getDate() == today.getDate()){
                 // set today's date to blue and bold the font
                 dateTextView.setTypeface(null, Typeface.BOLD);
-                dateTextView.setTextColor(getResources().getColor(R.color.lightBlue));
+                dateTextView.setTextColor(getResources().getColor(R.color.colorAccent));
             }
 
             dateTextView.setText(String.valueOf(date.getDate()));
