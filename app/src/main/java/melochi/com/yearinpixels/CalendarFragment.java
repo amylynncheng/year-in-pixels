@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import melochi.com.yearinpixels.constants.CalendarConstants;
+import melochi.com.yearinpixels.constants.Extras;
+
 public class CalendarFragment extends Fragment {
     private static final String TAG = CalendarFragment.class.getSimpleName();
     private LinearLayout mHeader;
@@ -27,15 +30,12 @@ public class CalendarFragment extends Fragment {
     private TextView mDateTextView;
     private GridView mGrid;
 
+    private CalendarAdapter mCalendarAdapter;
     private Calendar currentDate;
     private int todaysDate;
     private int todaysMonth;
     private int todaysYear;
     private static final int MAX_NUM_CELLS = 42;
-
-    String MONTH_NAMES[] = {"January", "February", "March", "April",
-            "May", "June", "July", "August", "September",
-            "October", "November", "December"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +102,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
                 Intent i = new Intent(getActivity(), MoodActivity.class);
+                i.putExtra(Extras.DATE_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
                 startActivity(i);
             }
         });
@@ -134,9 +135,10 @@ public class CalendarFragment extends Fragment {
             next = calender.getTime();
         }
         // fill grid
-        mGrid.setAdapter(new CalendarAdapter(getContext(), cells));
+        mCalendarAdapter = new CalendarAdapter(getContext(), cells);
+        mGrid.setAdapter(mCalendarAdapter);
         // set title
-        mDateTextView.setText(MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
+        mDateTextView.setText(CalendarConstants.MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
     }
 
     private boolean isMonthFilled(Date date, int month, int numFilled) {
