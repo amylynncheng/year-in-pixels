@@ -1,5 +1,6 @@
 package melochi.com.yearinpixels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +26,8 @@ import melochi.com.yearinpixels.constants.Extras;
 
 public class CalendarFragment extends Fragment {
     private static final String TAG = CalendarFragment.class.getSimpleName();
+    private static final int MOOD_ACTIVITY_REQUEST_CODE = 1;
+
     private LinearLayout mHeader;
     private ImageView mPrevButton;
     private ImageView mNextButton;
@@ -103,13 +107,21 @@ public class CalendarFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
                 Intent i = new Intent(getActivity(), MoodActivity.class);
                 i.putExtra(Extras.DATE_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
-                startActivity(i);
+                startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
             }
         });
     }
 
-    private boolean isAtEdgeOfYear() {
-        return currentDate.get(Calendar.MONTH) == 0 || currentDate.get(Calendar.MONTH) == 11;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MOOD_ACTIVITY_REQUEST_CODE) {
+            // TODO: replace debugging toasts
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
+            } else { // cancelled
+                Toast.makeText(getActivity(), "cancelled", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void populateCalendar() {
@@ -139,6 +151,10 @@ public class CalendarFragment extends Fragment {
         mGrid.setAdapter(mCalendarAdapter);
         // set title
         mDateTextView.setText(CalendarConstants.MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
+    }
+
+    private boolean isAtEdgeOfYear() {
+        return currentDate.get(Calendar.MONTH) == 0 || currentDate.get(Calendar.MONTH) == 11;
     }
 
     private boolean isMonthFilled(Date date, int month, int numFilled) {

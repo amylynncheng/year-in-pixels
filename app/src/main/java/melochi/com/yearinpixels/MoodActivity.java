@@ -1,7 +1,10 @@
 package melochi.com.yearinpixels;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -24,7 +27,7 @@ public class MoodActivity extends Activity {
             npe.printStackTrace();
         }
 
-
+        assignButtonListeners();
     }
 
     private void setDateTitle(Date selectedDate) {
@@ -35,5 +38,27 @@ public class MoodActivity extends Activity {
                 + calendar.get(Calendar.YEAR);
         TextView mDateTitle = findViewById(R.id.date_title);
         mDateTitle.setText(dateTitle);
+    }
+
+    private void assignButtonListeners() {
+        Button mCancelButton = findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
+                setResult(Activity.RESULT_CANCELED, i);
+                finish();
+            }
+        });
+
+        Button mSaveButton = findViewById(R.id.save_button);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
+                setResult(Activity.RESULT_OK, i);
+                finish();
+            }
+        });
     }
 }
