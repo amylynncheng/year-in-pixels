@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -14,6 +16,8 @@ import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class MoodActivity extends Activity {
+    private EditText mDescriptionBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,16 @@ public class MoodActivity extends Activity {
     }
 
     private void assignButtonListeners() {
+        ImageButton mAddDescriptionButton = findViewById(R.id.writing_button);
+        mAddDescriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setVisibility(View.GONE);
+                mDescriptionBox = findViewById(R.id.description_edit_text);
+                mDescriptionBox.setVisibility(View.VISIBLE);
+            }
+        });
+
         Button mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

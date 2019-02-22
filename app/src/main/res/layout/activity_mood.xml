@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
 
         <TextView
             android:id="@+id/writing_text"
-            android:text="@string/writing_prompt"
+            android:text="@string/description_prompt"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,6 +54,16 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/writing_text"
             style="@style/Widget.AppCompat.Button.Borderless"/>
+        <EditText
+            android:id="@+id/description_edit_text"
+            android:hint="@string/writing_prompt"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_below="@id/writing_button"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <LinearLayout

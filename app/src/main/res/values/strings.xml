@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Year In Pixels</string>
     <string name="rating_prompt">Overall mood today:</string>
-    <string name="writing_prompt">Write something about your day:</string>
+    <string name="description_prompt">Add a description:</string>
+    <string name="writing_prompt">Write something about your day</string>
     <string name="writing_button_description">Button for adding a description for the current day</string>
     <string name="date_placeholder_text">Placeholder for date</string>
     <string name="cancel">Cancel</string>
