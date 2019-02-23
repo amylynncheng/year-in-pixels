@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 
 import java.util.Calendar;
@@ -74,11 +76,17 @@ public class MoodActivity extends Activity {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PixelDay pixelDay = convertEntryToPixel();
-                Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
-                i.putExtra(Extras.PIXEL_DAY_EXTRA_KEY, pixelDay);
-                setResult(Activity.RESULT_OK, i);
-                finish();
+                if (mMoodRating.getSelectedSmile() == BaseRating.NONE) {
+                    Toast.makeText(MoodActivity.this,
+                            R.string.select_mood_warning,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    PixelDay pixelDay = convertEntryToPixel();
+                    Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
+                    i.putExtra(Extras.PIXEL_DAY_EXTRA_KEY, pixelDay);
+                    setResult(Activity.RESULT_OK, i);
+                    finish();
+                }
             }
         });
     }
