@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.hsalf.smilerating.SmileRating;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,6 +18,8 @@ import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class MoodActivity extends Activity {
+    private Date selectedDate;
+    private SmileRating mMoodRating;
     private EditText mDescriptionBox;
 
     @Override
@@ -25,12 +29,14 @@ public class MoodActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         try {
-            Date selectedDate = (Date) b.get(Extras.DATE_SELECTED_EXTRA_KEY);
+            selectedDate = (Date) b.get(Extras.DATE_SELECTED_EXTRA_KEY);
             setDateTitle(selectedDate);
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
 
+        mMoodRating = findViewById(R.id.mood_rating);
+        mDescriptionBox = findViewById(R.id.description_edit_text);
         assignButtonListeners();
     }
 
@@ -50,7 +56,6 @@ public class MoodActivity extends Activity {
             @Override
             public void onClick(View view) {
                 view.setVisibility(View.GONE);
-                mDescriptionBox = findViewById(R.id.description_edit_text);
                 mDescriptionBox.setVisibility(View.VISIBLE);
             }
         });
@@ -69,10 +74,18 @@ public class MoodActivity extends Activity {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PixelDay pixelDay = convertEntryToPixel();
                 Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
+                i.putExtra(Extras.PIXEL_DAY_EXTRA_KEY, pixelDay);
                 setResult(Activity.RESULT_OK, i);
                 finish();
             }
         });
+    }
+
+    private PixelDay convertEntryToPixel() {
+        int selectedMood = mMoodRating.getSelectedSmile();
+        String description = mDescriptionBox.getText().toString();
+        return new PixelDay(selectedDate, selectedMood, description);
     }
 }
