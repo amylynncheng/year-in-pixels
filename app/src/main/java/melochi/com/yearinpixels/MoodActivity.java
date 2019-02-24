@@ -20,7 +20,7 @@ import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class MoodActivity extends Activity {
-    private Date selectedDate;
+    private PixelDay mSelectedPixel;
     private SmileRating mMoodRating;
     private EditText mDescriptionBox;
     private int position;
@@ -33,8 +33,8 @@ public class MoodActivity extends Activity {
         Bundle b = getIntent().getExtras();
         try {
             position = b.getInt(Extras.CELL_POSITION_EXTRA);
-            selectedDate = (Date) b.get(Extras.DATE_SELECTED_EXTRA_KEY);
-            setDateTitle(selectedDate);
+            mSelectedPixel = (PixelDay) b.get(Extras.PIXEL_SELECTED_EXTRA_KEY);
+            setDateTitle(mSelectedPixel.getDate());
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
@@ -83,9 +83,9 @@ public class MoodActivity extends Activity {
                             R.string.select_mood_warning,
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    PixelDay pixelDay = convertEntryToPixel();
+                    updatePixelData();
                     Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
-                    i.putExtra(Extras.PIXEL_DAY_EXTRA_KEY, pixelDay);
+                    i.putExtra(Extras.RESULT_PIXEL_DAY_EXTRA_KEY, mSelectedPixel);
                     setResult(Activity.RESULT_OK, i);
                     finish();
                 }
@@ -93,9 +93,10 @@ public class MoodActivity extends Activity {
         });
     }
 
-    private PixelDay convertEntryToPixel() {
+    private void updatePixelData() {
         int selectedMood = mMoodRating.getSelectedSmile();
         String description = mDescriptionBox.getText().toString();
-        return new PixelDay(selectedDate, position, selectedMood, description);
+        mSelectedPixel.setMoodRating(selectedMood);
+        mSelectedPixel.setDescription(description);
     }
 }

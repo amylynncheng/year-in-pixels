@@ -19,6 +19,8 @@ public class PixelDay implements Serializable {
     public PixelDay(Date date, int position) {
         this.date = date;
         this.position = position;
+        this.moodRating = -1;
+        this.dayDescription = "";
     }
 
     public PixelDay(Date date, int position, int moodRating, String description) {
@@ -30,6 +32,10 @@ public class PixelDay implements Serializable {
 
     public int getPosition() {
         return position;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public int getMoodRating() {

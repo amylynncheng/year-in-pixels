@@ -106,8 +106,9 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
                 Intent i = new Intent(getActivity(), MoodActivity.class);
+                // TODO: remove passing position if redundant
                 i.putExtra(Extras.CELL_POSITION_EXTRA, position);
-                i.putExtra(Extras.DATE_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
+                i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
                 startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -118,7 +119,8 @@ public class CalendarFragment extends Fragment {
         if (requestCode == MOOD_ACTIVITY_REQUEST_CODE) {
             // TODO: replace debugging toasts
             if (resultCode == Activity.RESULT_OK) {
-                PixelDay pixelDay = (PixelDay) data.getSerializableExtra(Extras.PIXEL_DAY_EXTRA_KEY);
+                PixelDay pixelDay = (PixelDay) data.getSerializableExtra(
+                        Extras.RESULT_PIXEL_DAY_EXTRA_KEY);
                 updateCellColor(pixelDay);
             } else { // cancelled
                 Toast.makeText(getActivity(), "cancelled", Toast.LENGTH_SHORT).show();
@@ -132,7 +134,7 @@ public class CalendarFragment extends Fragment {
     }
 
     public void populateCalendar() {
-        ArrayList<Date> cells = new ArrayList<>();
+        ArrayList<PixelDay> cells = new ArrayList<>();
         Calendar calender = (Calendar) currentDate.clone();
         int currentMonth = currentDate.getTime().getMonth();
 
@@ -146,12 +148,14 @@ public class CalendarFragment extends Fragment {
         // purpose: fill empty cells with previous month's dates
         calender.add(Calendar.DAY_OF_MONTH, -startCell);
 
-        Date next = calender.getTime();
-        while (cells.size() < MAX_NUM_CELLS && !isMonthFilled(next, currentMonth, cells.size())) {
-            cells.add(next);
+        int position = 0;
+        Date nextDate = calender.getTime();
+        while (cells.size() < MAX_NUM_CELLS && !isMonthFilled(nextDate, currentMonth, cells.size())) {
+            cells.add(new PixelDay(nextDate, position));
+            position++;
             // increment by one day
             calender.add(Calendar.DAY_OF_MONTH, 1);
-            next = calender.getTime();
+            nextDate = calender.getTime();
         }
         // fill grid
         mCalendarAdapter = new CalendarAdapter(getContext(), cells);
@@ -168,11 +172,11 @@ public class CalendarFragment extends Fragment {
         return date.getMonth() != month && numFilled != 0 && numFilled % 7 == 0;
     }
 
-    private class CalendarAdapter extends ArrayAdapter<Date> {
+    private class CalendarAdapter extends ArrayAdapter<PixelDay> {
         private LayoutInflater inflater;
         private Date today;
 
-        public CalendarAdapter(Context context, ArrayList<Date> days) {
+        public CalendarAdapter(Context context, ArrayList<PixelDay> days) {
             super(context, R.layout.calendar_day, days);
             inflater = LayoutInflater.from(context);
             today = new Date();
@@ -186,7 +190,8 @@ public class CalendarFragment extends Fragment {
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Date date = getItem(position);
+            PixelDay pixel = getItem(position);
+            Date date = pixel.getDate();
 
             // inflate item if it does not exist
             if (convertView == null) {
