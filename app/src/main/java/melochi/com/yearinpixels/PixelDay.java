@@ -8,17 +8,28 @@ import melochi.com.yearinpixels.constants.CalendarConstants;
 
 public class PixelDay implements Serializable {
     private Date date;
+    private int position;
     private int moodRating;
     private String dayDescription;
 
-    public PixelDay(Date date) {
+    private static final int DEFAULT = R.color.defaultColor;
+    private static final int[] MOOD_COLORS = {
+            R.color.terrible, R.color.bad, R.color.average, R.color.good, R.color.great};
+
+    public PixelDay(Date date, int position) {
         this.date = date;
+        this.position = position;
     }
 
-    public PixelDay(Date date, int moodRating, String description) {
+    public PixelDay(Date date, int position, int moodRating, String description) {
         this.date = date;
+        this.position = position;
         this.moodRating = moodRating;
         this.dayDescription = description;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public int getMoodRating() {
@@ -35,6 +46,13 @@ public class PixelDay implements Serializable {
 
     public void setDescription(String description) {
         this.dayDescription = description;
+    }
+
+    public int getColor() {
+        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
+            return DEFAULT;
+        }
+        return MOOD_COLORS[this.moodRating];
     }
 
     public String toString() {

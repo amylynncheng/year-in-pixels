@@ -106,6 +106,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
                 Intent i = new Intent(getActivity(), MoodActivity.class);
+                i.putExtra(Extras.CELL_POSITION_EXTRA, position);
                 i.putExtra(Extras.DATE_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
                 startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
             }
@@ -117,11 +118,17 @@ public class CalendarFragment extends Fragment {
         if (requestCode == MOOD_ACTIVITY_REQUEST_CODE) {
             // TODO: replace debugging toasts
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), "saved", Toast.LENGTH_SHORT).show();
+                PixelDay pixelDay = (PixelDay) data.getSerializableExtra(Extras.PIXEL_DAY_EXTRA_KEY);
+                updateCellColor(pixelDay);
             } else { // cancelled
                 Toast.makeText(getActivity(), "cancelled", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void updateCellColor(PixelDay pixel) {
+        View updatedCell = mGrid.getChildAt(pixel.getPosition());
+        updatedCell.setBackgroundColor(getResources().getColor(pixel.getColor()));
     }
 
     public void populateCalendar() {

@@ -6,4 +6,11 @@
     <color name="greyOut">#C7C7C7</color>
     <color name="lightLightGrey">#F6F6F6</color>
     <color name="lightBlue">#ADD8E6</color>
+
+    <color name="great">#FF3232</color>
+    <color name="good">#FF9932</color>
+    <color name="average">#FFE94d</color>
+    <color name="bad">#67F967</color>
+    <color name="terrible">#0077BE</color>
+    <color name="defaultColor">#FFFFFF</color>
 </resources>
