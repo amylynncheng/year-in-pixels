@@ -25,17 +25,17 @@ public class CalendarActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        currentMonth = Calendar.getInstance();
+
         mDateTextView = findViewById(R.id.calendar_date_display);
+        setMonthTitle(currentMonth);
         mPrevButton = findViewById(R.id.calendar_prev_button);
         mNextButton = findViewById(R.id.calendar_next_button);
         assignListeners();
 
-        currentMonth = Calendar.getInstance();
-        setMonthTitle(currentMonth);
-
+        // initialize the calendar grid view for the current month
         FragmentManager manager = getSupportFragmentManager();
         Fragment calendarFragment = manager.findFragmentById(R.id.fragment_container);
-
         if (calendarFragment == null) {
             calendarFragment = CalendarFragment.newInstance(currentMonth);
             getSupportFragmentManager()
@@ -46,10 +46,7 @@ public class CalendarActivity extends FragmentActivity {
     }
 
     private void replaceCalendarFragment(Calendar calendar) {
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment calendarFragment = manager.findFragmentById(R.id.fragment_container);
-
-        calendarFragment = CalendarFragment.newInstance(calendar);
+        Fragment calendarFragment = CalendarFragment.newInstance(calendar);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, calendarFragment)

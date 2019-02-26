@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="SUN"/>
+            android:text="@string/sunday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="MON"/>
+            android:text="@string/monday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="TUE"/>
+            android:text="@string/tuesday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="WED"/>
+            android:text="@string/wednesday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="THU"/>
+            android:text="@string/thursday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -61,7 +61,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="FRI"/>
+            android:text="@string/friday"/>
 
         <TextView
             android:layout_width="0dp"
@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:textColor="#222222"
-            android:text="SAT"/>
+            android:text="@string/saturday"/>
     </LinearLayout>
 
     <!-- days view -->

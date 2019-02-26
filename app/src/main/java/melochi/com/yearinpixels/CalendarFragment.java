@@ -29,9 +29,6 @@ public class CalendarFragment extends Fragment {
 
     private CalendarAdapter mCalendarAdapter;
     private Calendar currentDate;
-    private int todaysDate;
-    private int todaysMonth;
-    private int todaysYear;
     private static final int MAX_NUM_CELLS = 42;
 
     public static CalendarFragment newInstance(Calendar calendar) {
@@ -47,7 +44,9 @@ public class CalendarFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get the current date from fragment arguments
-        currentDate = (Calendar) getArguments().getSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY);
+        assert getArguments() != null;
+        currentDate = (Calendar) getArguments()
+                .getSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY);
     }
 
     @Override
@@ -55,12 +54,6 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.calendar_component, container, false);
         mGrid = view.findViewById(R.id.calendar_grid);
         assignListeners();
-
-        // set the date, month, year of today's date (for comparisons)
-        todaysDate = currentDate.get(Calendar.DATE);
-        todaysMonth = currentDate.get(Calendar.MONTH);
-        todaysYear = currentDate.get(Calendar.YEAR);
-
         populateCalendar();
         return view;
     }
@@ -134,7 +127,7 @@ public class CalendarFragment extends Fragment {
         private LayoutInflater inflater;
         private Date today;
 
-        public CalendarAdapter(Context context, ArrayList<PixelDay> days) {
+        CalendarAdapter(Context context, ArrayList<PixelDay> days) {
             super(context, R.layout.calendar_day, days);
             inflater = LayoutInflater.from(context);
             today = new Date();
@@ -161,8 +154,7 @@ public class CalendarFragment extends Fragment {
             if (date.getMonth() != currentDate.getTime().getMonth()) {
                 // grey out the dates outside of the current month
                 dateTextView.setTextColor(getResources().getColor(R.color.greyOut));
-            }
-            if (date.getMonth() == today.getMonth() && date.getDate() == today.getDate()){
+            } else if (date.getMonth() == today.getMonth() && date.getDate() == today.getDate()){
                 // set today's date to blue and bold the font
                 dateTextView.setTypeface(null, Typeface.BOLD);
                 dateTextView.setTextColor(getResources().getColor(R.color.colorAccent));
