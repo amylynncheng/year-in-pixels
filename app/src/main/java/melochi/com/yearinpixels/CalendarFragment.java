@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +19,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class CalendarFragment extends Fragment {
     private static final String TAG = CalendarFragment.class.getSimpleName();
     private static final int MOOD_ACTIVITY_REQUEST_CODE = 1;
 
-    private LinearLayout mHeader;
-    private ImageView mPrevButton;
-    private ImageView mNextButton;
-    private TextView mDateTextView;
     private GridView mGrid;
 
     private CalendarAdapter mCalendarAdapter;
@@ -41,19 +34,28 @@ public class CalendarFragment extends Fragment {
     private int todaysYear;
     private static final int MAX_NUM_CELLS = 42;
 
+    public static CalendarFragment newInstance(Calendar calendar) {
+        Bundle args = new Bundle();
+        args.putSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY, calendar);
+
+        CalendarFragment fragment = new CalendarFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // get the current date from fragment arguments
+        currentDate = (Calendar) getArguments().getSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_component, container, false);
-        // initialize widgets
-        mHeader = view.findViewById(R.id.calendar_header);
-        mPrevButton = view.findViewById(R.id.calendar_prev_button);
-        mNextButton = view.findViewById(R.id.calendar_next_button);
-        mDateTextView = view.findViewById(R.id.calendar_date_display);
         mGrid = view.findViewById(R.id.calendar_grid);
         assignListeners();
 
-        // get the current date (allowed to change, used for advancing to other months)
-        currentDate = Calendar.getInstance();
         // set the date, month, year of today's date (for comparisons)
         todaysDate = currentDate.get(Calendar.DATE);
         todaysMonth = currentDate.get(Calendar.MONTH);
@@ -64,44 +66,6 @@ public class CalendarFragment extends Fragment {
     }
 
     private void assignListeners() {
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // re-enable the next button if we previously disabled it
-                if (mNextButton.getVisibility() == View.INVISIBLE) {
-                    mNextButton.setVisibility(View.VISIBLE);
-                    mNextButton.setEnabled(true);
-                }
-
-                currentDate.add(Calendar.MONTH, -1); // go back one month
-                populateCalendar();
-                // only show calendar for the current year
-                if (isAtEdgeOfYear()) {
-                    view.setVisibility(View.INVISIBLE);
-                    view.setEnabled(false);
-                }
-            }
-        });
-
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // re-enable the previous button if we previously disabled it
-                if (mPrevButton.getVisibility() == View.INVISIBLE) {
-                    mPrevButton.setVisibility(View.VISIBLE);
-                    mPrevButton.setEnabled(true);
-                }
-
-                currentDate.add(Calendar.MONTH, 1); // go forward one month
-                populateCalendar();
-                // only show calendar for the current year
-                if (isAtEdgeOfYear()) {
-                    view.setVisibility(View.INVISIBLE);
-                    view.setEnabled(false);
-                }
-            }
-        });
-
         mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
@@ -160,12 +124,6 @@ public class CalendarFragment extends Fragment {
         // fill grid
         mCalendarAdapter = new CalendarAdapter(getContext(), cells);
         mGrid.setAdapter(mCalendarAdapter);
-        // set title
-        mDateTextView.setText(CalendarConstants.MONTH_NAMES[currentDate.get(Calendar.MONTH)]);
-    }
-
-    private boolean isAtEdgeOfYear() {
-        return currentDate.get(Calendar.MONTH) == 0 || currentDate.get(Calendar.MONTH) == 11;
     }
 
     private boolean isMonthFilled(Date date, int month, int numFilled) {
