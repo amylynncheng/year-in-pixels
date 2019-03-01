@@ -85,7 +85,7 @@ public class MoodActivity extends Activity {
                 } else {
                     updatePixelData();
                     Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
-                    i.putExtra(Extras.RESULT_PIXEL_DAY_EXTRA_KEY, mSelectedPixel);
+                    i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, mSelectedPixel);
                     setResult(Activity.RESULT_OK, i);
                     finish();
                 }

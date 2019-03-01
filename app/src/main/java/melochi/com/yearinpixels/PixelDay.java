@@ -67,6 +67,7 @@ public class PixelDay implements Serializable {
         String string = CalendarConstants.MONTH_NAMES[calendar.get(Calendar.MONTH)] + " "
                 + calendar.get(Calendar.DATE) + ", "
                 + calendar.get(Calendar.YEAR) + ": "
+                + "POSITION = " + position + ", "
                 + "MOOD = " + moodRating + ", "
                 + "DESCRIPTION = " + dayDescription;
         return string;

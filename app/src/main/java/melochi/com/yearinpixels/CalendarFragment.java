@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import melochi.com.yearinpixels.constants.Extras;
 
@@ -27,14 +28,14 @@ public class CalendarFragment extends Fragment {
 
     private GridView mGrid;
 
+    private ArrayList<PixelDay> cells;
     private CalendarAdapter mCalendarAdapter;
     private Calendar currentDate;
-    private static final int MAX_NUM_CELLS = 42;
 
-    public static CalendarFragment newInstance(Calendar calendar) {
+    public static CalendarFragment newInstance(Calendar calendar, List<PixelDay> cells) {
         Bundle args = new Bundle();
         args.putSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY, calendar);
-
+        args.putSerializable(Extras.MONTH_CELL_LIST_EXTRA_KEY, (ArrayList) cells);
         CalendarFragment fragment = new CalendarFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,6 +48,7 @@ public class CalendarFragment extends Fragment {
         assert getArguments() != null;
         currentDate = (Calendar) getArguments()
                 .getSerializable(Extras.CURRENT_DATE_CALENDAR_EXTRA_KEY);
+        cells = (ArrayList<PixelDay>) getArguments().getSerializable(Extras.MONTH_CELL_LIST_EXTRA_KEY);
     }
 
     @Override
@@ -54,7 +56,9 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.calendar_component, container, false);
         mGrid = view.findViewById(R.id.calendar_grid);
         assignListeners();
-        populateCalendar();
+        // fill grid
+        mCalendarAdapter = new CalendarAdapter(getContext(), cells);
+        mGrid.setAdapter(mCalendarAdapter);
         return view;
     }
 
@@ -90,39 +94,6 @@ public class CalendarFragment extends Fragment {
         updatedCell.setBackgroundColor(getResources().getColor(pixel.getColor()));
     }
 
-    public void populateCalendar() {
-        ArrayList<PixelDay> cells = new ArrayList<>();
-        Calendar calender = (Calendar) currentDate.clone();
-        int currentMonth = currentDate.getTime().getMonth();
-
-        // start at the first day of this month
-        calender.set(Calendar.DAY_OF_MONTH, 1);
-        // determine the cell for first day of the current month based on what day of the week it is
-        // note: get(DAY_OF_WEEK) returns 1-7 for Sunday-Saturday
-        int startCell = calender.get(Calendar.DAY_OF_WEEK) - 1;
-
-        // start from x number of days BEFORE the start of the current month
-        // purpose: fill empty cells with previous month's dates
-        calender.add(Calendar.DAY_OF_MONTH, -startCell);
-
-        int position = 0;
-        Date nextDate = calender.getTime();
-        while (cells.size() < MAX_NUM_CELLS && !isMonthFilled(nextDate, currentMonth, cells.size())) {
-            cells.add(new PixelDay(nextDate, position));
-            position++;
-            // increment by one day
-            calender.add(Calendar.DAY_OF_MONTH, 1);
-            nextDate = calender.getTime();
-        }
-        // fill grid
-        mCalendarAdapter = new CalendarAdapter(getContext(), cells);
-        mGrid.setAdapter(mCalendarAdapter);
-    }
-
-    private boolean isMonthFilled(Date date, int month, int numFilled) {
-        return date.getMonth() != month && numFilled != 0 && numFilled % 7 == 0;
-    }
-
     private class CalendarAdapter extends ArrayAdapter<PixelDay> {
         private LayoutInflater inflater;
         private Date today;
@@ -141,16 +112,19 @@ public class CalendarFragment extends Fragment {
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            PixelDay pixel = getItem(position);
-            Date date = pixel.getDate();
-
             // inflate item if it does not exist
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.calendar_day, parent, false);
             }
-
             TextView dateTextView = (TextView) convertView;
 
+            PixelDay pixel = getItem(position);
+            if (pixel == null) {
+                // this cell is not a part of the current month, leave it as empty
+                return convertView;
+            }
+
+            Date date = pixel.getDate();
             if (date.getMonth() != currentDate.getTime().getMonth()) {
                 // grey out the dates outside of the current month
                 dateTextView.setTextColor(getResources().getColor(R.color.greyOut));

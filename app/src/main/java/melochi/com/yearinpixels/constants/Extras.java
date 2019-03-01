@@ -9,4 +9,6 @@ public class Extras {
             "melochi.com.yearinpixels.RESULT_PIXEL_DAY_EXTRA";
     public final static String CURRENT_DATE_CALENDAR_EXTRA_KEY =
             "melochi.com.yearinpixels.CURRENT_DATE_CALENDAR_EXTRA_KEY";
+    public final static String MONTH_CELL_LIST_EXTRA_KEY =
+            "melochi.com.yearinpixels.MONTH_CELL_LIST_EXTRA_KEY";
 }
