@@ -42,8 +42,7 @@ public class CalendarActivity extends FragmentActivity {
         FragmentManager manager = getSupportFragmentManager();
         Fragment calendarFragment = manager.findFragmentById(R.id.fragment_container);
         if (calendarFragment == null) {
-            calendarFragment = CalendarFragment.newInstance(currentMonth,
-                    getCellsForCurrentMonth());
+            calendarFragment = CalendarFragment.newInstance(getCellsForCurrentMonth());
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, calendarFragment)
@@ -52,8 +51,7 @@ public class CalendarActivity extends FragmentActivity {
     }
 
     private void replaceCalendarFragment(Calendar calendar) {
-        Fragment calendarFragment = CalendarFragment.newInstance(calendar,
-                getCellsForCurrentMonth());
+        Fragment calendarFragment = CalendarFragment.newInstance(getCellsForCurrentMonth());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, calendarFragment)
