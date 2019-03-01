@@ -23,7 +23,6 @@ public class MoodActivity extends Activity {
     private PixelDay mSelectedPixel;
     private SmileRating mMoodRating;
     private EditText mDescriptionBox;
-    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class MoodActivity extends Activity {
 
         Bundle b = getIntent().getExtras();
         try {
-            position = b.getInt(Extras.CELL_POSITION_EXTRA);
             mSelectedPixel = (PixelDay) b.get(Extras.PIXEL_SELECTED_EXTRA_KEY);
             setDateTitle(mSelectedPixel.getDate());
         } catch (NullPointerException npe) {
@@ -85,7 +83,7 @@ public class MoodActivity extends Activity {
                 } else {
                     updatePixelData();
                     Intent i = new Intent(MoodActivity.this, CalendarActivity.class);
-                    i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, mSelectedPixel);
+                    i.putExtra(Extras.RESULT_PIXEL_DAY_EXTRA_KEY, mSelectedPixel);
                     setResult(Activity.RESULT_OK, i);
                     finish();
                 }

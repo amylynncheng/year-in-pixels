@@ -62,9 +62,8 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
                 Intent i = new Intent(getActivity(), MoodActivity.class);
-                // TODO: remove passing position if redundant
-                i.putExtra(Extras.CELL_POSITION_EXTRA, position);
-                i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, mCalendarAdapter.getItem(position));
+                PixelDay selectedPixelDay = mCalendarAdapter.getItem(position);
+                i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, selectedPixelDay);
                 startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
             }
         });
