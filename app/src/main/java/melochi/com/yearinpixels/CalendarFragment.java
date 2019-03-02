@@ -77,6 +77,7 @@ public class CalendarFragment extends Fragment {
                 PixelDay pixelDay = (PixelDay) data.getSerializableExtra(
                         Extras.RESULT_PIXEL_DAY_EXTRA_KEY);
                 updateCellColor(pixelDay);
+                updateCellInList(pixelDay);
             } else { // cancelled
                 Toast.makeText(getActivity(), "cancelled", Toast.LENGTH_SHORT).show();
             }
@@ -86,6 +87,17 @@ public class CalendarFragment extends Fragment {
     public void updateCellColor(PixelDay pixel) {
         View updatedCell = mGrid.getChildAt(pixel.getPosition());
         updatedCell.setBackgroundColor(getResources().getColor(pixel.getColor()));
+    }
+
+    private void updateCellInList(PixelDay pixel) {
+        // update cell in the list
+        cells.set(pixel.getPosition(), pixel);
+        // update list in the activity variable, pixelsPerMonth
+        CalendarActivity activity = (CalendarActivity) getActivity();
+        if (activity != null) {
+            int month = pixel.getDate().getMonth();
+            activity.pixelsPerMonth.set(month, cells);
+        }
     }
 
     private class CalendarAdapter extends ArrayAdapter<PixelDay> {
@@ -126,6 +138,7 @@ public class CalendarFragment extends Fragment {
             }
 
             dateTextView.setText(String.valueOf(date.getDate()));
+            dateTextView.setBackgroundColor(getResources().getColor(pixel.getColor()));
             return convertView;
         }
     }

@@ -22,7 +22,7 @@ public class CalendarActivity extends FragmentActivity {
     private ImageView mNextButton;
 
     private Calendar currentMonth;
-    private List<List<PixelDay>> pixelsPerMonth;
+    public List<List<PixelDay>> pixelsPerMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
