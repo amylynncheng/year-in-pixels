@@ -7,4 +7,8 @@ public class Extras {
             "melochi.com.yearinpixels.RESULT_PIXEL_DAY_EXTRA";
     public final static String MONTH_CELL_LIST_EXTRA_KEY =
             "melochi.com.yearinpixels.MONTH_CELL_LIST_EXTRA_KEY";
+
+    // Keys in SharedPreferences
+    public final static String PIXELS_PER_MONTH_KEY =
+            "melochi.com.yearinpixels.MONTH_CELL_LIST_EXTRA_KEY";
 }

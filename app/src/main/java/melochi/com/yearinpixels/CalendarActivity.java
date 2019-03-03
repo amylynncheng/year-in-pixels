@@ -1,5 +1,7 @@
 package melochi.com.yearinpixels;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,12 +10,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import melochi.com.yearinpixels.constants.CalendarConstants;
+import melochi.com.yearinpixels.constants.Extras;
 
 public class CalendarActivity extends FragmentActivity {
     private static final String TAG = "CalendarActivity";
@@ -29,8 +36,8 @@ public class CalendarActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        loadData();
         currentMonth = Calendar.getInstance();
-        pixelsPerMonth = initializePixelsList();
 
         mDateTextView = findViewById(R.id.calendar_date_display);
         setMonthTitle(currentMonth);
@@ -144,6 +151,36 @@ public class CalendarActivity extends FragmentActivity {
 
     private List<PixelDay> getCellsForCurrentMonth(){
         return pixelsPerMonth.get(currentMonth.get(Calendar.MONTH));
+    }
+
+    @Override
+    protected void onPause() {
+        saveData();
+        super.onPause();
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        // convert the list into a JSON string so we can store it in SharedPreferences
+        Gson gson = new Gson();
+        String json = gson.toJson(pixelsPerMonth);
+        editor.putString(Extras.PIXELS_PER_MONTH_KEY, json);
+        editor.apply();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPref.getString(Extras.PIXELS_PER_MONTH_KEY, null);
+        if (json == null) {
+            pixelsPerMonth = initializePixelsList();
+        } else {
+            Type type = new TypeToken<ArrayList<ArrayList<PixelDay>>>() {}.getType();
+            pixelsPerMonth = gson.fromJson(json, type);
+        }
     }
 }
 
