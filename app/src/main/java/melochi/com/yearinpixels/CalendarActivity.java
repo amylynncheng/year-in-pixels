@@ -22,7 +22,8 @@ import java.util.List;
 import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
-public class CalendarActivity extends FragmentActivity {
+public class CalendarActivity extends FragmentActivity
+        implements CalendarFragment.OnPixelDaySavedListener {
     private static final String TAG = "CalendarActivity";
     private TextView mDateTextView;
     private ImageView mPrevButton;
@@ -54,6 +55,14 @@ public class CalendarActivity extends FragmentActivity {
                     .beginTransaction()
                     .add(R.id.fragment_container, calendarFragment)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof CalendarFragment) {
+            CalendarFragment calendarFragment = (CalendarFragment) fragment;
+            calendarFragment.setOnPixelDaySavedListener(this);
         }
     }
 
@@ -151,6 +160,12 @@ public class CalendarActivity extends FragmentActivity {
 
     private List<PixelDay> getCellsForCurrentMonth(){
         return pixelsPerMonth.get(currentMonth.get(Calendar.MONTH));
+    }
+
+    @Override
+    public void onPixelDaySaved(PixelDay pixelDay) {
+        int month = pixelDay.getDate().getMonth();
+        pixelsPerMonth.get(month).set(pixelDay.getPosition(), pixelDay);
     }
 
     @Override
