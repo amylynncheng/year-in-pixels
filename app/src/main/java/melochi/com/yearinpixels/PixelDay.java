@@ -30,6 +30,10 @@ public class PixelDay implements Serializable {
         this.dayDescription = description;
     }
 
+    public boolean isEmpty() {
+        return this.moodRating == -1;
+    }
+
     public int getPosition() {
         return position;
     }

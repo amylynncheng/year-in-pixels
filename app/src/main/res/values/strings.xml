@@ -16,4 +16,6 @@
     <string name="thursday">THU</string>
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
+    <string name="mood_placeholder_text">Mood placeholder</string>
+    <string name="description_placeholder_text">Description placeholder</string>
 </resources>

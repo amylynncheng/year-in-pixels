@@ -48,12 +48,12 @@ public class CalendarActivity extends FragmentActivity
 
         // initialize the calendar grid view for the current month
         FragmentManager manager = getSupportFragmentManager();
-        Fragment calendarFragment = manager.findFragmentById(R.id.fragment_container);
+        Fragment calendarFragment = manager.findFragmentById(R.id.calendar_fragment_container);
         if (calendarFragment == null) {
             calendarFragment = CalendarFragment.newInstance(getCellsForCurrentMonth());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, calendarFragment)
+                    .add(R.id.calendar_fragment_container, calendarFragment)
                     .commit();
         }
     }
@@ -70,7 +70,7 @@ public class CalendarActivity extends FragmentActivity
         Fragment calendarFragment = CalendarFragment.newInstance(getCellsForCurrentMonth());
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, calendarFragment)
+                .replace(R.id.calendar_fragment_container, calendarFragment)
                 .commit();
     }
 

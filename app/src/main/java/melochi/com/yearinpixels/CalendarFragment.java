@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ public class CalendarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.calendar_component, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         mGrid = view.findViewById(R.id.calendar_grid);
         assignListeners();
         // fill grid
@@ -62,10 +63,19 @@ public class CalendarFragment extends Fragment {
         mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View cell, int position, long id) {
-                Intent i = new Intent(getActivity(), MoodActivity.class);
                 PixelDay selectedPixelDay = mCalendarAdapter.getItem(position);
-                i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, selectedPixelDay);
-                startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
+                // if the selected date has not been filled out before, start the blank edit activity
+                if (selectedPixelDay == null || selectedPixelDay.isEmpty()) {
+                    Intent i = new Intent(getActivity(), MoodActivity.class);
+                    i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, selectedPixelDay);
+                    startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
+                } else { // the selected date has already been edited -- show the current state
+                    Activity activity = getActivity();
+                    FrameLayout reviewLayout = activity.findViewById(R.id.review_container);
+                    // clear any existing views before setting new ones
+                    reviewLayout.removeAllViews();
+                    getLayoutInflater().inflate(R.layout.fragment_review, reviewLayout);
+                }
             }
         });
     }
