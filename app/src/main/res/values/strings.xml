@@ -18,4 +18,9 @@
     <string name="saturday">SAT</string>
     <string name="mood_placeholder_text">Mood placeholder</string>
     <string name="description_placeholder_text">Description placeholder</string>
+    <string name="terrible">Terrible</string>
+    <string name="bad">Bad</string>
+    <string name="okay">Okay</string>
+    <string name="good">Good</string>
+    <string name="great">Great</string>
 </resources>

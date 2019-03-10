@@ -13,10 +13,6 @@ import android.widget.Toast;
 import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class MoodActivity extends Activity {
@@ -32,7 +28,8 @@ public class MoodActivity extends Activity {
         Bundle b = getIntent().getExtras();
         try {
             mSelectedPixel = (PixelDay) b.get(Extras.PIXEL_SELECTED_EXTRA_KEY);
-            setDateTitle(mSelectedPixel.getDate());
+            TextView mDateTitle = findViewById(R.id.date_title);
+            mDateTitle.setText(mSelectedPixel.getDateString());
         } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
@@ -40,16 +37,6 @@ public class MoodActivity extends Activity {
         mMoodRating = findViewById(R.id.mood_rating);
         mDescriptionBox = findViewById(R.id.description_edit_text);
         assignButtonListeners();
-    }
-
-    private void setDateTitle(Date selectedDate) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-        String dateTitle = CalendarConstants.MONTH_NAMES[calendar.get(Calendar.MONTH)] + " "
-                + calendar.get(Calendar.DATE) + ", "
-                + calendar.get(Calendar.YEAR);
-        TextView mDateTitle = findViewById(R.id.date_title);
-        mDateTitle.setText(dateTitle);
     }
 
     private void assignButtonListeners() {

@@ -70,14 +70,25 @@ public class CalendarFragment extends Fragment {
                     i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, selectedPixelDay);
                     startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
                 } else { // the selected date has already been edited -- show the current state
-                    Activity activity = getActivity();
-                    FrameLayout reviewLayout = activity.findViewById(R.id.review_container);
-                    // clear any existing views before setting new ones
-                    reviewLayout.removeAllViews();
-                    getLayoutInflater().inflate(R.layout.fragment_review, reviewLayout);
+                    displaySavedDay(selectedPixelDay);
                 }
             }
         });
+    }
+
+    private void displaySavedDay(PixelDay selectedPixelDay) {
+        Activity activity = getActivity();
+        FrameLayout reviewLayout = activity.findViewById(R.id.review_container);
+        // clear any existing views before setting new ones
+        reviewLayout.removeAllViews();
+        getLayoutInflater().inflate(R.layout.fragment_review, reviewLayout);
+        // set the corresponding views to this PixelDay's attributes
+        TextView dateTextView = reviewLayout.findViewById(R.id.saved_date_header);
+        dateTextView.setText(selectedPixelDay.getDateString());
+        TextView moodTextView = reviewLayout.findViewById(R.id.saved_mood_rating);
+        moodTextView.setText(selectedPixelDay.getMoodString());
+        TextView description = reviewLayout.findViewById(R.id.saved_description);
+        description.setText(selectedPixelDay.getDescription());
     }
 
     public void setOnPixelDaySavedListener(OnPixelDaySavedListener activity) {

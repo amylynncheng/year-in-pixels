@@ -15,6 +15,7 @@ public class PixelDay implements Serializable {
     private static final int DEFAULT = R.color.defaultColor;
     private static final int[] MOOD_COLORS = {
             R.color.terrible, R.color.bad, R.color.average, R.color.good, R.color.great};
+    private static final String[] MOOD_STRINGS = {"Terrible", "Bad", "Okay", "Good", "Great"};
 
     public PixelDay(Date date, int position) {
         this.date = date;
@@ -65,12 +66,26 @@ public class PixelDay implements Serializable {
         return MOOD_COLORS[this.moodRating];
     }
 
+    public String getDateString() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        String dateString = CalendarConstants.MONTH_NAMES[calendar.get(Calendar.MONTH)] + " "
+                + calendar.get(Calendar.DATE) + ", "
+                + calendar.get(Calendar.YEAR);
+        return dateString;
+    }
+
+    public String getMoodString() {
+        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
+            return ""; // this should never occur
+        }
+        return MOOD_STRINGS[this.moodRating];
+    }
+
     public String toString() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        String string = CalendarConstants.MONTH_NAMES[calendar.get(Calendar.MONTH)] + " "
-                + calendar.get(Calendar.DATE) + ", "
-                + calendar.get(Calendar.YEAR) + ": "
+        String string = getDateString() + ": "
                 + "POSITION = " + position + ", "
                 + "MOOD = " + moodRating + ", "
                 + "DESCRIPTION = " + dayDescription;
