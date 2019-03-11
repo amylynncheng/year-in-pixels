@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,8 +86,8 @@ public class CalendarFragment extends Fragment {
         // set the corresponding views to this PixelDay's attributes
         TextView dateTextView = reviewLayout.findViewById(R.id.saved_date_header);
         dateTextView.setText(selectedPixelDay.getDateString());
-        TextView moodTextView = reviewLayout.findViewById(R.id.saved_mood_rating);
-        moodTextView.setText(selectedPixelDay.getMoodString());
+        ImageView moodIcon = reviewLayout.findViewById(R.id.saved_mood_icon);
+        moodIcon.setImageDrawable(getResources().getDrawable(selectedPixelDay.getMoodIcon()));
         TextView description = reviewLayout.findViewById(R.id.saved_description);
         description.setText(selectedPixelDay.getDescription());
     }

@@ -16,6 +16,9 @@ public class PixelDay implements Serializable {
     private static final int[] MOOD_COLORS = {
             R.color.terrible, R.color.bad, R.color.average, R.color.good, R.color.great};
     private static final String[] MOOD_STRINGS = {"Terrible", "Bad", "Okay", "Good", "Great"};
+    private static final int[] MOOD_ICONS = {
+            R.drawable.ic_mood_terrible_56dp, R.drawable.ic_mood_bad_56dp, R.drawable.ic_mood_okay_56dp,
+            R.drawable.ic_mood_good_56dp, R.drawable.ic_mood_great_56dp};
 
     public PixelDay(Date date, int position) {
         this.date = date;
@@ -80,6 +83,13 @@ public class PixelDay implements Serializable {
             return ""; // this should never occur
         }
         return MOOD_STRINGS[this.moodRating];
+    }
+
+    public int getMoodIcon() {
+        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
+            return R.drawable.ic_mood_okay_56dp; // this should never occur
+        }
+        return MOOD_ICONS[this.moodRating];
     }
 
     public String toString() {
