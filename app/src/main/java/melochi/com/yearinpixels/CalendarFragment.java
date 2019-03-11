@@ -158,6 +158,17 @@ public class CalendarFragment extends Fragment {
             dateTextView.setBackgroundColor(getResources().getColor(pixel.getColor()));
             return convertView;
         }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            PixelDay pixel = getItem(position);
+            return pixel != null;
+        }
     }
 
     /**
