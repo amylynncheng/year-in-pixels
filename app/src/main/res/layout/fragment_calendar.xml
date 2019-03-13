@@ -77,5 +77,8 @@
         android:id="@+id/calendar_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:background="@color/lightLightGrey"
         android:numColumns="7"/>
 </LinearLayout>
