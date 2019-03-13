@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +24,7 @@ import java.util.List;
 import melochi.com.yearinpixels.constants.CalendarConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
-public class CalendarActivity extends FragmentActivity
+public class CalendarActivity extends AppCompatActivity
         implements CalendarFragment.OnPixelDaySavedListener {
     private static final String TAG = "CalendarActivity";
     private TextView mDateTextView;
@@ -56,6 +58,21 @@ public class CalendarActivity extends FragmentActivity
                     .add(R.id.calendar_fragment_container, calendarFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_item_settings) {
+            return true;
+        }
+        return false;
     }
 
     @Override

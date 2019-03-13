@@ -24,4 +24,5 @@
     <string name="good">Good</string>
     <string name="great">Great</string>
     <string name="mood_icon_description">Mood emoticon for this date</string>
+    <string name="settings">Settings</string>
 </resources>
