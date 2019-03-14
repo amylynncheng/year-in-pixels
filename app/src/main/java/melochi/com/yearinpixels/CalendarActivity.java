@@ -1,6 +1,7 @@
 package melochi.com.yearinpixels;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -70,6 +71,8 @@ public class CalendarActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_item_settings) {
+            Intent i = new Intent(CalendarActivity.this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
         return false;
@@ -215,14 +218,3 @@ public class CalendarActivity extends AppCompatActivity
         }
     }
 }
-
-/**
-options:
-    1. keep list of array lists with empty PixelDays first
-        move prev/next buttons to Activity instead of Fragment;
-        pass the list associated with the current month to fragment
-        fragment displays all data of that list
-        if a cell is updated,
-    2. change to recycler view
-    3. use grid only
-*/
