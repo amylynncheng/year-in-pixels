@@ -114,7 +114,7 @@ public class CalendarFragment extends Fragment {
 
     public void updateCellColor(PixelDay pixel) {
         View updatedCell = mGrid.getChildAt(pixel.getPosition());
-        updatedCell.setBackgroundColor(getResources().getColor(pixel.getColor()));
+        updatedCell.setBackgroundColor(pixel.getColor());
     }
 
     private class CalendarAdapter extends ArrayAdapter<PixelDay> {
@@ -155,7 +155,7 @@ public class CalendarFragment extends Fragment {
             }
 
             dateTextView.setText(String.valueOf(date.getDate()));
-            dateTextView.setBackgroundColor(getResources().getColor(pixel.getColor()));
+            dateTextView.setBackgroundColor(pixel.getColor());
             return convertView;
         }
 

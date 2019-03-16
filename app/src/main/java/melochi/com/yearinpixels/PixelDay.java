@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import melochi.com.yearinpixels.constants.CalendarConstants;
+import melochi.com.yearinpixels.constants.ColorConstants;
 
 public class PixelDay implements Serializable {
     private Date date;
@@ -12,9 +13,6 @@ public class PixelDay implements Serializable {
     private int moodRating;
     private String dayDescription;
 
-    private static final int DEFAULT = R.color.defaultColor;
-    private static final int[] MOOD_COLORS = {
-            R.color.terrible, R.color.bad, R.color.average, R.color.good, R.color.great};
     private static final String[] MOOD_STRINGS = {"Terrible", "Bad", "Okay", "Good", "Great"};
     private static final int[] MOOD_ICONS = {
             R.drawable.ic_mood_terrible_56dp, R.drawable.ic_mood_bad_56dp, R.drawable.ic_mood_okay_56dp,
@@ -63,10 +61,11 @@ public class PixelDay implements Serializable {
     }
 
     public int getColor() {
-        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
-            return DEFAULT;
+        ColorConstants colorConstants = ColorConstants.get();
+        if (this.moodRating < 0 || this.moodRating >= colorConstants.getPalette().length) {
+            return colorConstants.getDefaultColor();
         }
-        return MOOD_COLORS[this.moodRating];
+        return colorConstants.getPalette()[this.moodRating];
     }
 
     public String getDateString() {
@@ -79,14 +78,14 @@ public class PixelDay implements Serializable {
     }
 
     public String getMoodString() {
-        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
+        if (this.moodRating < 0 || this.moodRating >= MOOD_STRINGS.length) {
             return ""; // this should never occur
         }
         return MOOD_STRINGS[this.moodRating];
     }
 
     public int getMoodIcon() {
-        if (this.moodRating < 0 || this.moodRating >= MOOD_COLORS.length) {
+        if (this.moodRating < 0 || this.moodRating >= MOOD_ICONS.length) {
             return R.drawable.ic_mood_okay_56dp; // this should never occur
         }
         return MOOD_ICONS[this.moodRating];
