@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import melochi.com.yearinpixels.constants.CalendarConstants;
+import melochi.com.yearinpixels.constants.ColorConstants;
 import melochi.com.yearinpixels.constants.Extras;
 
 public class CalendarActivity extends AppCompatActivity
@@ -202,6 +203,12 @@ public class CalendarActivity extends AppCompatActivity
         Gson gson = new Gson();
         String json = gson.toJson(pixelsPerMonth);
         editor.putString(Extras.PIXELS_PER_MONTH_KEY, json);
+        // store the color that corresponds to each individual mood
+        int numColors = Extras.ALL_MOOD_COLORS_KEY.length;
+        int[] customColors = ColorConstants.get().getPalette();
+        for (int i = 0; i < numColors; i++) {
+            editor.putInt(Extras.ALL_MOOD_COLORS_KEY[i], customColors[i]);
+        }
         editor.apply();
     }
 
@@ -216,5 +223,15 @@ public class CalendarActivity extends AppCompatActivity
             Type type = new TypeToken<ArrayList<ArrayList<PixelDay>>>() {}.getType();
             pixelsPerMonth = gson.fromJson(json, type);
         }
+        // get preferred color palette for pixel days
+        int numColors = Extras.ALL_MOOD_COLORS_KEY.length;
+        int[] defaultColors = ColorConstants.get().getDefaultPalette();
+        int[] colorPrefs = new int[numColors];
+        for (int i = 0; i < numColors; i++) {
+            colorPrefs[i] = sharedPref.getInt(
+                    Extras.ALL_MOOD_COLORS_KEY[i],
+                    defaultColors[i]);
+        }
+        ColorConstants.get().setPalette(colorPrefs);
     }
 }
