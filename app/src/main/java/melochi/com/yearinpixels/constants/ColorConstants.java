@@ -47,4 +47,24 @@ public class ColorConstants {
     public void setPalette(int[] colors) {
         CUSTOM_MOOD_COLORS = colors;
     }
+
+    public void setTerribleColor(int color) {
+        CUSTOM_MOOD_COLORS[0] = color;
+    }
+
+    public void setBadColor(int color) {
+        CUSTOM_MOOD_COLORS[1] = color;
+    }
+
+    public void setOkayColor(int color) {
+        CUSTOM_MOOD_COLORS[2] = color;
+    }
+
+    public void setGoodColor(int color) {
+        CUSTOM_MOOD_COLORS[3] = color;
+    }
+
+    public void setGreatColor(int color) {
+        CUSTOM_MOOD_COLORS[4] = color;
+    }
 }
