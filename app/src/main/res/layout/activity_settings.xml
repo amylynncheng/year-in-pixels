@@ -1,146 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/color_settings_title"
-        android:textSize="20sp"
-        android:layout_marginBottom="20dp"/>
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/color_settings_title"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"/>
 
-    <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mood_great_56dp"
+                android:drawableLeft="@drawable/ic_mood_great_56dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/great"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/edit_great_color_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/edit_color_button_description"
+                android:src="@drawable/ic_create_black_24dp"
+                android:onClick="showColorPickerDialog" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mood_good_56dp"
+                android:drawableLeft="@drawable/ic_mood_good_56dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/good"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/edit_good_color_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/edit_color_button_description"
+                android:src="@drawable/ic_create_black_24dp"
+                android:onClick="showColorPickerDialog" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mood_okay_56dp"
+                android:drawableLeft="@drawable/ic_mood_okay_56dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/okay"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/edit_okay_color_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/edit_color_button_description"
+                android:src="@drawable/ic_create_black_24dp"
+                android:onClick="showColorPickerDialog" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mood_bad_56dp"
+                android:drawableLeft="@drawable/ic_mood_bad_56dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/bad"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/edit_bad_color_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/edit_color_button_description"
+                android:src="@drawable/ic_create_black_24dp"
+                android:onClick="showColorPickerDialog" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mood_terrible_56dp"
+                android:drawableLeft="@drawable/ic_mood_terrible_56dp"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/terrible"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/edit_terrible_color_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/edit_color_button_description"
+                android:src="@drawable/ic_create_black_24dp"
+                android:onClick="showColorPickerDialog"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/save_settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_mood_great_56dp"
-            android:drawableLeft="@drawable/ic_mood_great_56dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/great"
-            android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/edit_great_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/edit_color_button_description"
-            android:src="@drawable/ic_create_black_24dp"
-            android:onClick="showColorPickerDialog" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_mood_good_56dp"
-            android:drawableLeft="@drawable/ic_mood_good_56dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/good"
-            android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/edit_good_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/edit_color_button_description"
-            android:src="@drawable/ic_create_black_24dp"
-            android:onClick="showColorPickerDialog" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_mood_okay_56dp"
-            android:drawableLeft="@drawable/ic_mood_okay_56dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/okay"
-            android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/edit_okay_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/edit_color_button_description"
-            android:src="@drawable/ic_create_black_24dp"
-            android:onClick="showColorPickerDialog" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_mood_bad_56dp"
-            android:drawableLeft="@drawable/ic_mood_bad_56dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/bad"
-            android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/edit_bad_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/edit_color_button_description"
-            android:src="@drawable/ic_create_black_24dp"
-            android:onClick="showColorPickerDialog" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_mood_terrible_56dp"
-            android:drawableLeft="@drawable/ic_mood_terrible_56dp"
-            android:drawablePadding="20dp"
-            android:gravity="center_vertical"
-            android:text="@string/terrible"
-            android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/edit_terrible_color_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/edit_color_button_description"
-            android:src="@drawable/ic_create_black_24dp"
-            android:onClick="showColorPickerDialog"/>
-    </RelativeLayout>
-</LinearLayout>
+        android:text="@string/save_changes"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

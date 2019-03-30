@@ -1,6 +1,7 @@
 package melochi.com.yearinpixels;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,10 +15,29 @@ import com.larswerkman.holocolorpicker.SaturationBar;
 import melochi.com.yearinpixels.constants.ColorConstants;
 
 public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = "SettingsActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Button saveSettingsButton = findViewById(R.id.save_settings_button);
+        saveSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ColorConstants.get().commitUnsavedChanges();
+                Intent i = new Intent(SettingsActivity.this, CalendarActivity.class);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        ColorConstants.get().discardUnsavedChanges();
+        super.onBackPressed();
     }
 
     public void showColorPickerDialog(View v) {
@@ -30,6 +50,13 @@ public class SettingsActivity extends AppCompatActivity {
         SaturationBar saturationBar = dialog.findViewById(R.id.saturation_bar);
         picker.addSaturationBar(saturationBar);
 
+        Button discardButton = dialog.findViewById(R.id.cancel_color_button);
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         Button saveButton = dialog.findViewById(R.id.save_color_button);
         saveButton.setOnClickListener(new ColorSavedListener(selectedButton, picker, dialog));
         dialog.show();

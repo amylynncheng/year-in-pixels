@@ -1,5 +1,6 @@
 package melochi.com.yearinpixels;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,8 @@ import melochi.com.yearinpixels.constants.Extras;
 public class CalendarActivity extends AppCompatActivity
         implements CalendarFragment.OnPixelDaySavedListener {
     private static final String TAG = "CalendarActivity";
+    private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
+
     private TextView mDateTextView;
     private ImageView mPrevButton;
     private ImageView mNextButton;
@@ -73,10 +76,19 @@ public class CalendarActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.menu_item_settings) {
             Intent i = new Intent(CalendarActivity.this, SettingsActivity.class);
-            startActivity(i);
+            startActivityForResult(i, SETTINGS_ACTIVITY_REQUEST_CODE);
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SETTINGS_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                replaceCalendarFragment();
+            }
+        }
     }
 
     @Override
@@ -87,12 +99,12 @@ public class CalendarActivity extends AppCompatActivity
         }
     }
 
-    private void replaceCalendarFragment(Calendar calendar) {
+    private void replaceCalendarFragment() {
         Fragment calendarFragment = CalendarFragment.newInstance(getCellsForCurrentMonth());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.calendar_fragment_container, calendarFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void assignListeners() {
@@ -107,7 +119,7 @@ public class CalendarActivity extends AppCompatActivity
 
                 currentMonth.add(Calendar.MONTH, -1); // go back one month
                 setMonthTitle(currentMonth);
-                replaceCalendarFragment(currentMonth);
+                replaceCalendarFragment();
                 // only show calendar for the current year
                 if (isAtEdgeOfYear()) {
                     view.setVisibility(View.INVISIBLE);
@@ -127,7 +139,7 @@ public class CalendarActivity extends AppCompatActivity
 
                 currentMonth.add(Calendar.MONTH, 1); // go forward one month
                 setMonthTitle(currentMonth);
-                replaceCalendarFragment(currentMonth);
+                replaceCalendarFragment();
                 // only show calendar for the current year
                 if (isAtEdgeOfYear()) {
                     view.setVisibility(View.INVISIBLE);

@@ -27,4 +27,5 @@
     <string name="settings">Settings</string>
     <string name="color_settings_title">Change your pixel colors:</string>
     <string name="edit_color_button_description">Button for editing the color of a pixel</string>
+    <string name="save_changes">Save changes</string>
 </resources>
