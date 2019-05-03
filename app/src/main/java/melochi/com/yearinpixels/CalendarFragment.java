@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +24,7 @@ import melochi.com.yearinpixels.constants.Extras;
 
 public class CalendarFragment extends Fragment {
     private static final String TAG = CalendarFragment.class.getSimpleName();
-    private static final int MOOD_ACTIVITY_REQUEST_CODE = 1;
+    private static final int MOOD_ACTIVITY_REQUEST_CODE = 2;
 
     private GridView mGrid;
 
@@ -69,7 +68,7 @@ public class CalendarFragment extends Fragment {
                 if (selectedPixelDay == null || selectedPixelDay.isEmpty()) {
                     Intent i = new Intent(getActivity(), MoodActivity.class);
                     i.putExtra(Extras.PIXEL_SELECTED_EXTRA_KEY, selectedPixelDay);
-                    startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
+                    getActivity().startActivityForResult(i, MOOD_ACTIVITY_REQUEST_CODE);
                 } else { // the selected date has already been edited -- show the current state
                     displaySavedDay(selectedPixelDay);
                 }
@@ -94,22 +93,6 @@ public class CalendarFragment extends Fragment {
 
     public void setOnPixelDaySavedListener(OnPixelDaySavedListener activity) {
         mCallback = activity;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MOOD_ACTIVITY_REQUEST_CODE) {
-            // TODO: replace debugging toasts
-            if (resultCode == Activity.RESULT_OK) {
-                PixelDay pixelDay = (PixelDay) data.getSerializableExtra(
-                        Extras.RESULT_PIXEL_DAY_EXTRA_KEY);
-                updateCellColor(pixelDay);
-                mCallback.onPixelDaySaved(pixelDay);
-                //updateCellInList(pixelDay);
-            } else { // cancelled
-                Toast.makeText(getActivity(), "cancelled", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public void updateCellColor(PixelDay pixel) {

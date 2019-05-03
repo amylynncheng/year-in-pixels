@@ -31,6 +31,7 @@ public class CalendarActivity extends AppCompatActivity
         implements CalendarFragment.OnPixelDaySavedListener {
     private static final String TAG = "CalendarActivity";
     private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
+    private static final int MOOD_ACTIVITY_REQUEST_CODE = 2;
 
     private TextView mDateTextView;
     private ImageView mPrevButton;
@@ -87,6 +88,16 @@ public class CalendarActivity extends AppCompatActivity
         if (requestCode == SETTINGS_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 replaceCalendarFragment();
+            }
+        } else if (requestCode == MOOD_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                CalendarFragment calendarFragment = (CalendarFragment) getSupportFragmentManager().findFragmentById(R.id.calendar_fragment_container);
+                PixelDay pixelDay = (PixelDay) data.getSerializableExtra(
+                        Extras.RESULT_PIXEL_DAY_EXTRA_KEY);
+                if (calendarFragment != null) {
+                    calendarFragment.updateCellColor(pixelDay);
+                    onPixelDaySaved(pixelDay);
+                }
             }
         }
     }
