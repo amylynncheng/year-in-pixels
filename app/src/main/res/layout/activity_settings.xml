@@ -31,6 +31,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/great"
                 android:textSize="20sp" />
+            <View
+                android:id="@+id/great_color_square"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignStart="@id/edit_great_color_button"
+                android:layout_alignLeft="@id/edit_great_color_button"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyOut" />
             <ImageButton
                 android:id="@+id/edit_great_color_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
@@ -57,6 +67,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/good"
                 android:textSize="20sp" />
+            <View
+                android:id="@+id/good_color_square"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignStart="@id/edit_good_color_button"
+                android:layout_alignLeft="@id/edit_good_color_button"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyOut" />
             <ImageButton
                 android:id="@+id/edit_good_color_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
@@ -83,6 +103,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/okay"
                 android:textSize="20sp" />
+            <View
+                android:id="@+id/okay_color_square"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignStart="@id/edit_okay_color_button"
+                android:layout_alignLeft="@id/edit_okay_color_button"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyOut" />
             <ImageButton
                 android:id="@+id/edit_okay_color_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
@@ -109,6 +139,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/bad"
                 android:textSize="20sp" />
+            <View
+                android:id="@+id/bad_color_square"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignStart="@id/edit_bad_color_button"
+                android:layout_alignLeft="@id/edit_bad_color_button"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyOut" />
             <ImageButton
                 android:id="@+id/edit_bad_color_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
@@ -135,6 +175,16 @@
                 android:gravity="center_vertical"
                 android:text="@string/terrible"
                 android:textSize="20sp" />
+            <View
+                android:id="@+id/terrible_color_square"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignStart="@id/edit_terrible_color_button"
+                android:layout_alignLeft="@id/edit_terrible_color_button"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyOut" />
             <ImageButton
                 android:id="@+id/edit_terrible_color_button"
                 style="@style/Widget.AppCompat.Button.Borderless"
